@@ -32,6 +32,7 @@ public class KeyValueList {
 
   private long index;
   private List<KeyValue> list;
+  private JsonObject tree;
 
   /**
    * Default constructor
@@ -98,6 +99,50 @@ public class KeyValueList {
   }
 
   /**
+   * Get list of key/value pairs as tree
+   *
+   * @return tree
+   */
+  public JsonObject getTree() {
+    return getTree("/");
+  }
+
+  /**
+   * Get list of key/value pairs as tree
+   *
+   * @param delimiter the delimiter
+   * @return tree
+   */
+  public JsonObject getTree(String delimiter) {
+    if (tree == null) {
+      tree = new JsonObject();
+      if (list != null) {
+        for (KeyValue keyValue : list) {
+          if (keyValue.getKey().endsWith(delimiter)) {
+            continue;
+          }
+          JsonObject json = tree;
+          String[] arr = keyValue.getKey().split(delimiter);
+          for (int i = 0; i < arr.length; i++) {
+            String key = arr[i];
+            if (i == arr.length - 1) {
+              json.put(key, keyValue.getValue());
+            } else {
+              JsonObject next = json.getJsonObject(key);
+              if (next == null) {
+                next = new JsonObject();
+                json.put(key, next);
+              }
+              json = next;
+            }
+          }
+        }
+      }
+    }
+    return tree;
+  }
+
+  /**
    * Set list of key/value pairs
    *
    * @param list list of key/value pairs
@@ -105,6 +150,7 @@ public class KeyValueList {
    */
   public KeyValueList setList(List<KeyValue> list) {
     this.list = list;
+    this.tree = null;
     return this;
   }
 
