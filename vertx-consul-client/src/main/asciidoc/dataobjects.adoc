@@ -777,6 +777,28 @@ Set session ID for lock release operation.
 +++
 |===
 
+[[KeyValueTree]]
+== KeyValueTree
+
+++++
+ Holds result of key/value pairs query as 
+++++
+'''
+
+[cols=">25%,^25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[index]]`index`|`Number (long)`|
++++
+Set Consul index
++++
+|[[tree]]`tree`|`Json object`|
++++
+Set tree of key/value pairs
++++
+|===
+
 [[MaintenanceOptions]]
 == MaintenanceOptions
 

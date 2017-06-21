@@ -143,6 +143,29 @@ public interface ConsulClient {
   ConsulClient getValues(String keyPrefix, Handler<AsyncResult<KeyValueList>> resultHandler);
 
   /**
+   * Returns the tree of key/value pairs that corresponding to the specified key prefix.
+   *
+   * @param keyPrefix the prefix
+   * @param resultHandler will be provided with tree of key/value pairs
+   * @return reference to this, for fluency
+   * @see <a href="https://www.consul.io/api/kv.html">/v1/kv/&lt;key&gt;</a> endpoint
+   */
+  @Fluent
+  ConsulClient getValuesTree(String keyPrefix, Handler<AsyncResult<KeyValueTree>> resultHandler);
+
+  /**
+   * Returns the tree of key/value pairs that corresponding to the specified key prefix.
+   *
+   * @param keyPrefix the prefix
+   * @param delimiter the delimiter
+   * @param resultHandler will be provided with tree of key/value pairs
+   * @return reference to this, for fluency
+   * @see <a href="https://www.consul.io/api/kv.html">/v1/kv/&lt;key&gt;</a> endpoint
+   */
+  @Fluent
+  ConsulClient getValuesTreeWithDelimiter(String keyPrefix, String delimiter, Handler<AsyncResult<KeyValueTree>> resultHandler);
+
+  /**
    * Returns the list of key/value pairs that corresponding to the specified key prefix.
    * This is blocking query unlike {@link ConsulClient#getValues(String, Handler)}
    *

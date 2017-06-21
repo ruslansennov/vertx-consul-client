@@ -67,6 +67,18 @@ public class ConsulServiceImpl implements ConsulService {
   }
 
   @Override
+  public ConsulService getValuesTree(String keyPrefix, Handler<AsyncResult<KeyValueTree>> resultHandler) {
+    consulClient.getValuesTree(keyPrefix, resultHandler);
+    return this;
+  }
+
+  @Override
+  public ConsulService getValuesTreeWithDelimiter(String keyPrefix, String delimiter, Handler<AsyncResult<KeyValueTree>> resultHandler) {
+    consulClient.getValuesTreeWithDelimiter(keyPrefix, delimiter, resultHandler);
+    return this;
+  }
+
+  @Override
   public ConsulService getValuesWithOptions(String keyPrefix, BlockingQueryOptions options, Handler<AsyncResult<KeyValueList>> resultHandler) {
     consulClient.getValuesWithOptions(keyPrefix, options, resultHandler);
     return this;

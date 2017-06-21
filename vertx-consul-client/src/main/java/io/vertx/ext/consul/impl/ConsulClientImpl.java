@@ -112,6 +112,17 @@ public class ConsulClientImpl implements ConsulClient {
   }
 
   @Override
+  public ConsulClient getValuesTree(String keyPrefix, Handler<AsyncResult<KeyValueTree>> resultHandler) {
+    return getValuesTreeWithDelimiter(keyPrefix, "/", resultHandler);
+  }
+
+  @Override
+  public ConsulClient getValuesTreeWithDelimiter(String keyPrefix, String delimiter, Handler<AsyncResult<KeyValueTree>> resultHandler) {
+    resultHandler.handle(Future.failedFuture("not implemented yet"));
+    return this;
+  }
+
+  @Override
   public ConsulClient getValuesWithOptions(String keyPrefix, BlockingQueryOptions options, Handler<AsyncResult<KeyValueList>> resultHandler) {
     Query query = Query.of("recurse", true).put(options);
     requestArray(HttpMethod.GET, "/v1/kv/" + urlEncode(keyPrefix), query, null, resultHandler, (arr, headers) -> {
