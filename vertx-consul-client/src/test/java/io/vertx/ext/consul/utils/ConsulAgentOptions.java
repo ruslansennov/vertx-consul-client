@@ -1,0 +1,81 @@
+/*
+ * Copyright (c) 2016 The original author or authors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Apache License v2.0 which accompanies this distribution.
+ *
+ *      The Eclipse Public License is available at
+ *      http://www.eclipse.org/legal/epl-v10.html
+ *
+ *      The Apache License v2.0 is available at
+ *      http://www.opensource.org/licenses/apache2.0.php
+ *
+ * You may elect to redistribute this code under either of these licenses.
+ */
+package io.vertx.ext.consul.utils;
+
+/**
+ * @author <a href="mailto:ruslan.sennov@gmail.com">Ruslan Sennov</a>
+ */
+public class ConsulAgentOptions {
+
+  private static final String DEFAULT_CONSUL_VERSION = "0.7.5";
+  private static final String DEFAULT_ADDRESS = "127.0.0.1";
+
+  private String consulVersion;
+  private String address;
+  private String keyFile;
+  private String certFile;
+  private String caFile;
+
+  public ConsulAgentOptions() {
+    consulVersion = DEFAULT_CONSUL_VERSION;
+    address = DEFAULT_ADDRESS;
+  }
+
+  public String getConsulVersion() {
+    return consulVersion;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public String getKeyFile() {
+    return keyFile;
+  }
+
+  public String getCertFile() {
+    return certFile;
+  }
+
+  public String getCaFile() {
+    return caFile;
+  }
+
+  public ConsulAgentOptions setConsulVersion(String consulVersion) {
+    this.consulVersion = consulVersion;
+    return this;
+  }
+
+  public ConsulAgentOptions setAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public ConsulAgentOptions setKeyFile(String keyFile) {
+    this.keyFile = keyFile;
+    return this;
+  }
+
+  public ConsulAgentOptions setCertFile(String certFile) {
+    this.certFile = certFile;
+    return this;
+  }
+
+  public ConsulAgentOptions setCaFile(String caFile) {
+    this.caFile = caFile;
+    return this;
+  }
+}
