@@ -15,9 +15,9 @@
  */
 package io.vertx.ext.consul;
 
-import io.vertx.ext.consul.utils.ConsulAgent;
-import io.vertx.ext.consul.utils.ConsulAgentOptions;
-import io.vertx.ext.consul.utils.ConsulDatacenter;
+import io.vertx.ext.consul.dc.ConsulAgent;
+import io.vertx.ext.consul.dc.ConsulAgentOptions;
+import io.vertx.ext.consul.dc.ConsulDatacenter;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -27,7 +27,7 @@ import java.io.PrintWriter;
  */
 class ConsulCluster {
 
-  private static final ConsulDatacenter dc = new ConsulDatacenter();
+  private static final ConsulDatacenter dc = ConsulDatacenter.create();
 
   private static ConsulAgent defaultAgent;
   private static String writeToken;

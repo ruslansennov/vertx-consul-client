@@ -17,7 +17,7 @@ package io.vertx.ext.consul.suite;
 
 import io.vertx.ext.consul.*;
 import io.vertx.ext.consul.common.StateConsumer;
-import io.vertx.ext.consul.utils.ConsulAgent;
+import io.vertx.ext.consul.dc.ConsulAgent;
 import org.junit.Test;
 
 import java.util.ArrayList;

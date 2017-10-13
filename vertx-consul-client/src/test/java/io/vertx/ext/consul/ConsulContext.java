@@ -16,8 +16,8 @@
 package io.vertx.ext.consul;
 
 import io.vertx.core.net.PemTrustOptions;
-import io.vertx.ext.consul.utils.ConsulAgent;
-import io.vertx.ext.consul.utils.ConsulDatacenter;
+import io.vertx.ext.consul.dc.ConsulAgent;
+import io.vertx.ext.consul.dc.ConsulDatacenter;
 
 import java.util.function.Consumer;
 import java.util.function.Function;

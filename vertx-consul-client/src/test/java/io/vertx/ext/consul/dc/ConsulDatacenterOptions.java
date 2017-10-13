@@ -13,9 +13,10 @@
  *
  * You may elect to redistribute this code under either of these licenses.
  */
-package io.vertx.ext.consul.utils;
+package io.vertx.ext.consul.dc;
 
-import static io.vertx.ext.consul.utils.ConsulTestUtils.randomHex;
+import static io.vertx.test.core.TestUtils.randomAlphaString;
+import static io.vertx.test.core.TestUtils.randomPositiveInt;
 
 /**
  * @author <a href="mailto:ruslan.sennov@gmail.com">Ruslan Sennov</a>
@@ -26,8 +27,8 @@ public class ConsulDatacenterOptions {
   private String masterToken;
 
   public ConsulDatacenterOptions() {
-    name = "dc-" + randomHex(16);
-    masterToken = randomHex(16);
+    name = "dc-" + randomPositiveInt();
+    masterToken = randomAlphaString(16);
   }
 
   public String getName() {

@@ -13,16 +13,16 @@
  *
  * You may elect to redistribute this code under either of these licenses.
  */
-package io.vertx.ext.consul.utils;
+package io.vertx.ext.consul.dc;
 
-import static io.vertx.ext.consul.utils.ConsulTestUtils.randomHex;
-import static io.vertx.ext.consul.utils.ConsulTestUtils.randomNodeId;
+import java.util.Random;
 
 /**
  * @author <a href="mailto:ruslan.sennov@gmail.com">Ruslan Sennov</a>
  */
 public class ConsulAgentOptions {
 
+  private static final Random random = new Random();
   private static final String DEFAULT_CONSUL_VERSION = "0.7.5";
   private static final String DEFAULT_ADDRESS = "127.0.0.1";
 
@@ -102,5 +102,17 @@ public class ConsulAgentOptions {
   public ConsulAgentOptions setCaFile(String caFile) {
     this.caFile = caFile;
     return this;
+  }
+
+  private static String randomNodeId() {
+    return randomHex(8) + "-" + randomHex(4) + "-" + randomHex(4) + "-" + randomHex(4) + "-" + randomHex(12);
+  }
+
+  private static String randomHex(int len) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < len; i++) {
+      sb.append(Long.toHexString(random.nextInt(16)));
+    }
+    return sb.toString();
   }
 }

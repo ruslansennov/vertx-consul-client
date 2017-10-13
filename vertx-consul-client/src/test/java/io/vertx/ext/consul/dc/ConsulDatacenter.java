@@ -13,7 +13,7 @@
  *
  * You may elect to redistribute this code under either of these licenses.
  */
-package io.vertx.ext.consul.utils;
+package io.vertx.ext.consul.dc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +27,15 @@ public class ConsulDatacenter {
   private final String masterToken;
   private final List<ConsulAgent> agents;
 
-  public ConsulDatacenter() {
-    this(new ConsulDatacenterOptions());
+  public static ConsulDatacenter create() {
+    return new ConsulDatacenter(new ConsulDatacenterOptions());
   }
 
-  public ConsulDatacenter(ConsulDatacenterOptions options) {
+  public static ConsulDatacenter create(ConsulDatacenterOptions options) {
+    return new ConsulDatacenter(options);
+  }
+
+  private ConsulDatacenter(ConsulDatacenterOptions options) {
     name = options.getName();
     masterToken = options.getMasterToken();
     agents = new ArrayList<>();
@@ -49,11 +53,11 @@ public class ConsulDatacenter {
 
   public void detachAgent(ConsulAgent agent) {
     agents.remove(agent);
-    agent.process().close();
+    agent.stop();
   }
 
   public void stop() {
-    agents.forEach(agent -> agent.process().close());
+    agents.forEach(ConsulAgent::stop);
     agents.clear();
   }
 
@@ -68,6 +72,4 @@ public class ConsulDatacenter {
   public String getMasterToken() {
     return masterToken;
   }
-
-//  private String post(String url, String )
 }

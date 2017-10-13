@@ -13,7 +13,7 @@
  *
  * You may elect to redistribute this code under either of these licenses.
  */
-package io.vertx.ext.consul.utils;
+package io.vertx.ext.consul.dc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,12 +30,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
-
-import static io.vertx.ext.consul.utils.ConsulTestUtils.getFreePort;
 
 /**
  * @author <a href="mailto:ruslan.sennov@gmail.com">Ruslan Sennov</a>
@@ -99,8 +98,8 @@ public class ConsulAgent {
       .start();
   }
 
-  ConsulProcess process() {
-    return process;
+  void stop() {
+    process.close();
   }
 
   public String createAclToken(String rules) throws IOException {
@@ -115,7 +114,8 @@ public class ConsulAgent {
     if (response.getStatusLine().getStatusCode() != 200) {
       throw new RuntimeException("Bad response");
     }
-    Map<String, String> tokenResponse = mapper.readValue(EntityUtils.toString(response.getEntity()), new TypeReference<Map<String, String>>(){});
+    Map<String, String> tokenResponse = mapper.readValue(EntityUtils.toString(response.getEntity()), new TypeReference<Map<String, String>>() {
+    });
     return tokenResponse.get("ID");
   }
 
@@ -137,5 +137,17 @@ public class ConsulAgent {
 
   public String getName() {
     return name;
+  }
+
+  private static int getFreePort() {
+    int port = -1;
+    try {
+      ServerSocket socket = new ServerSocket(0);
+      port = socket.getLocalPort();
+      socket.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return port;
   }
 }
