@@ -15,6 +15,9 @@
  */
 package io.vertx.ext.consul.utils;
 
+import static io.vertx.ext.consul.utils.ConsulTestUtils.randomHex;
+import static io.vertx.ext.consul.utils.ConsulTestUtils.randomNodeId;
+
 /**
  * @author <a href="mailto:ruslan.sennov@gmail.com">Ruslan Sennov</a>
  */
@@ -25,6 +28,8 @@ public class ConsulAgentOptions {
 
   private String consulVersion;
   private String address;
+  private String nodeName;
+  private String nodeId;
   private String keyFile;
   private String certFile;
   private String caFile;
@@ -32,6 +37,8 @@ public class ConsulAgentOptions {
   public ConsulAgentOptions() {
     consulVersion = DEFAULT_CONSUL_VERSION;
     address = DEFAULT_ADDRESS;
+    nodeName = "node-" + randomHex(16);
+    nodeId = randomNodeId();
   }
 
   public String getConsulVersion() {
@@ -40,6 +47,14 @@ public class ConsulAgentOptions {
 
   public String getAddress() {
     return address;
+  }
+
+  public String getNodeName() {
+    return nodeName;
+  }
+
+  public String getNodeId() {
+    return nodeId;
   }
 
   public String getKeyFile() {
@@ -61,6 +76,16 @@ public class ConsulAgentOptions {
 
   public ConsulAgentOptions setAddress(String address) {
     this.address = address;
+    return this;
+  }
+
+  public ConsulAgentOptions setNodeName(String nodeName) {
+    this.nodeName = nodeName;
+    return this;
+  }
+
+  public ConsulAgentOptions setNodeId(String nodeId) {
+    this.nodeId = nodeId;
     return this;
   }
 
