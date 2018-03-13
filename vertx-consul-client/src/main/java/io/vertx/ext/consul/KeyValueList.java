@@ -70,6 +70,50 @@ public class KeyValueList {
   }
 
   /**
+   *
+   * @return
+   */
+  public JsonObject asTree() {
+    return asTree("/");
+  }
+
+  /**
+   *
+   * @param delimiter
+   * @return
+   */
+  public JsonObject asTree(String delimiter) {
+    JsonObject res = new JsonObject();
+    if (!isPresent()) {
+      return res;
+    }
+    for (KeyValue kv : list) {
+      String k = kv.getKey();
+      String[] parts = k.split(delimiter, k.length());
+      JsonObject json = res;
+      for (int i = 0; i < parts.length; i++) {
+        String key = parts[i];
+        if (i == parts.length - 1) {
+          json.put(key, kv.getValue());
+        } else {
+          Object value = json.getValue(key);
+          if (value instanceof JsonObject) {
+            json = (JsonObject) value;
+          } else {
+            JsonObject next = new JsonObject();
+            if (value instanceof String) {
+              next.put("", value);
+            }
+            json.put(key, next);
+            json = next;
+          }
+        }
+      }
+    }
+    return res;
+  }
+
+  /**
    * Return {@code true} if there is a key/value pairs present, otherwise {@code false}.
    *
    * @return {@code true} if there is a key/value pairs present, otherwise {@code false}
