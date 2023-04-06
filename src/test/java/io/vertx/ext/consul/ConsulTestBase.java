@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static io.vertx.ext.consul.Utils.getAsync;
 import static io.vertx.test.core.TestUtils.randomAlphaString;
 
 /**
@@ -64,18 +65,18 @@ public class ConsulTestBase extends VertxTestBase {
   public void setUp() throws Exception {
     super.setUp();
     masterClient = consul.createClient(vertx, dc.getMasterToken(), false);
+
     AclToken writeTokenRequest = new AclToken().setType(AclTokenType.CLIENT)
       .setRules(Utils.readResource("write_rules.hcl"));
-    masterClient.createAclToken(writeTokenRequest).onSuccess(writeToken -> {
-      consul.dc().setWriteToken(writeToken);
-      writeClient = consul.createClient(vertx, writeToken, false);
-    });
+    String writeToken = getAsync(() -> masterClient.createAclToken(writeTokenRequest));
+    consul.dc().setWriteToken(writeToken);
+    writeClient = consul.createClient(vertx, writeToken, false);
+
     AclToken readTokenRequest = new AclToken().setType(AclTokenType.CLIENT)
       .setRules(Utils.readResource("read_rules.hcl"));
-    masterClient.createAclToken(readTokenRequest).onSuccess(readToken ->{
-      consul.dc().setReadToken(readToken);
-      readClient = consul.createClient(vertx, readToken, false);
-    }).wait(500);
+    String readToken = getAsync(() -> masterClient.createAclToken(readTokenRequest));
+    consul.dc().setReadToken(readToken);
+    readClient = consul.createClient(vertx, readToken, false);
   }
 
   @Override
