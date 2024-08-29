@@ -47,7 +47,6 @@ public class ConsulTestBase extends VertxTestBase {
   @BeforeClass
   public static void startConsul() throws Exception {
     consul = ConsulInstance.defaultConsulBuilder(dc).build();
-
   }
 
   @AfterClass
