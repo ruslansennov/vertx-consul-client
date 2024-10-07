@@ -9,6 +9,7 @@ public class UpstreamOptions {
   private static final String LOCAL_PORT = "LocalBindPort";
 
   private String destinationName;
+  private String dc;
   private int localBindPort;
 
   /**
@@ -45,6 +46,15 @@ public class UpstreamOptions {
 
   public UpstreamOptions setDestinationName(String destinationName) {
     this.destinationName = destinationName;
+    return this;
+  }
+
+  public String getDc() {
+    return dc;
+  }
+
+  public UpstreamOptions setDc(String dc) {
+    this.dc = dc;
     return this;
   }
 
