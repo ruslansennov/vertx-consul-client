@@ -13,20 +13,33 @@
  *
  * You may elect to redistribute this code under either of these licenses.
  */
-package io.vertx.ext.consul;
+package io.vertx.ext.consul.tests;
+
+import io.vertx.ext.consul.tests.suite.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
- * Represents operation in transaction. The available operation types are KV and Service
- *
  * @author <a href="mailto:ruslan.sennov@gmail.com">Ruslan Sennov</a>
  */
-public interface TxnOperation {
-
-  /**
-   * Returns the type of operation in a transaction
-   *
-   * @return the type of operation in a transaction
-   */
-  TxnOperationType getOperationType();
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+  BrokenConsul.class,
+  BrokenClient.class,
+  AgentInfo.class,
+  AclTokens.class,
+  Catalog.class,
+  Checks.class,
+  Coordinates.class,
+  Events.class,
+  KVStore.class,
+  Services.class,
+  Sessions.class,
+  Status.class,
+  SecureClient.class,
+  Transactions.class,
+  Watches.class,
+  PreparedQuery.class
+})
+public class ConsulClientTest {
 }

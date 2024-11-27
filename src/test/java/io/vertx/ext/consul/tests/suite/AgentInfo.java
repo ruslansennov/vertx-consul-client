@@ -13,20 +13,26 @@
  *
  * You may elect to redistribute this code under either of these licenses.
  */
-package io.vertx.ext.consul;
+package io.vertx.ext.consul.tests.suite;
+
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.consul.tests.ConsulTestBase;
+import io.vertx.ext.unit.TestContext;
+import io.vertx.ext.unit.junit.VertxUnitRunner;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
- * Represents operation in transaction. The available operation types are KV and Service
- *
  * @author <a href="mailto:ruslan.sennov@gmail.com">Ruslan Sennov</a>
  */
-public interface TxnOperation {
+@RunWith(VertxUnitRunner.class)
+public class AgentInfo extends ConsulTestBase {
 
-  /**
-   * Returns the type of operation in a transaction
-   *
-   * @return the type of operation in a transaction
-   */
-  TxnOperationType getOperationType();
-
+  @Test
+  public void info(TestContext tc) {
+    readClient.agentInfo().onComplete(tc.asyncAssertSuccess(info -> {
+      JsonObject config = info.getJsonObject("Config");
+      tc.assertEquals(config.getString("Datacenter"), consul.dc().getName());
+    }));
+  }
 }

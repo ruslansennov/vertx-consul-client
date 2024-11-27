@@ -41,6 +41,8 @@ public class ServiceOptions {
   private int port;
   private CheckOptions checkOptions;
   private List<CheckOptions> checkListOptions;
+  private long createIndex;
+  private long modifyIndex;
   private ConnectOptions connectOptions;
 
   /**
@@ -63,6 +65,8 @@ public class ServiceOptions {
     this.port = options.port;
     this.checkOptions = options.checkOptions;
     this.checkListOptions = options.checkListOptions;
+    this.createIndex = options.createIndex;
+    this.modifyIndex = options.modifyIndex;
     this.connectOptions = options.connectOptions;
   }
 
@@ -245,6 +249,47 @@ public class ServiceOptions {
     this.checkListOptions = checkListOptions;
     return this;
   }
+
+  /**
+   * Get the internal index value that represents when the entry was created.
+   *
+   * @return the internal index value that represents when the entry was created.
+   */
+  public long getCreateIndex() {
+    return createIndex;
+  }
+
+  /**
+   * Set the internal index value that represents when the entry was created.
+   *
+   * @param createIndex the internal index value that represents when the entry was created.
+   * @return reference to this, for fluency
+   */
+  public ServiceOptions setCreateIndex(long createIndex) {
+    this.createIndex = createIndex;
+    return this;
+  }
+
+  /**
+   * Get the last index that modified this key.
+   *
+   * @return the last index that modified this key.
+   */
+  public long getModifyIndex() {
+    return modifyIndex;
+  }
+
+  /**
+   * Set the last index that modified this key.
+   *
+   * @param modifyIndex the last index that modified this key.
+   * @return reference to this, for fluency
+   */
+  public ServiceOptions setModifyIndex(long modifyIndex) {
+    this.modifyIndex = modifyIndex;
+    return this;
+  }
+
 
   /**
    * Get consul-connect options of service
