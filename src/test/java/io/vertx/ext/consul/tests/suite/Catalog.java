@@ -17,8 +17,8 @@ package io.vertx.ext.consul.tests.suite;
 
 import io.vertx.core.Future;
 import io.vertx.ext.consul.*;
-import io.vertx.ext.consul.tests.instance.ConsulInstance;
 import io.vertx.ext.consul.tests.ConsulTestBase;
+import io.vertx.ext.consul.tests.instance.ConsulInstance;
 import io.vertx.ext.unit.Async;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
@@ -59,8 +59,9 @@ public class Catalog extends ConsulTestBase {
 
   @Test
   public void blockingQuery(TestContext tc) throws InterruptedException {
+    Async async1 = tc.async();
+    Async async2 = tc.async();
     readClient.catalogNodes().onComplete(tc.asyncAssertSuccess(nodes1 -> {
-      Async async1 = tc.async();
 
       System.out.println(">>>>>>> wait for new node");
       NodeQueryOptions blockingQueryOptions1 = new NodeQueryOptions()
@@ -86,18 +87,22 @@ public class Catalog extends ConsulTestBase {
                 System.out.println(">>>>>>> wait for new node detaching");
                 readClient
                   .catalogNodesWithOptions(blockingQueryOptions2)
-                  .onComplete(tc.asyncAssertSuccess());
+                  .onComplete(tc.asyncAssertSuccess(detached -> {
+                    async2.countDown();
+                    System.out.println(">>>>>>> new node detached");
+                  }));
                 vertx
                   .executeBlocking(() -> {
                     attached.stop();
                     return null;
-                  })
-                  .onComplete(detached -> System.out.println(">>>>>>> new node detached"));
+                  });
               }));
             });
           }));
       });
     }));
+    async1.await();
+    async2.await();
   }
 
   @Test
